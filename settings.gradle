@@ -1,2 +1,3 @@
+include ':aitd'
 include ':app'
 rootProject.name = "LibAitd"
