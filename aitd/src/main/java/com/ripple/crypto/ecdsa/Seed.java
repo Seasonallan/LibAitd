@@ -56,12 +56,13 @@ public class Seed {
     }
 
     public IKeyPair keyPair(int account) {
-        if (Arrays.equals(version, VER_ED25519)) {
-            if (account != 0) throw new AssertionError();
-            return EDKeyPair.from128Seed(seedBytes);
-        }  else {
-            return createKeyPair(seedBytes, account);
-        }
+        return createKeyPair(seedBytes, account);
+//        if (Arrays.equals(version, VER_ED25519)) {
+//            if (account != 0) throw new AssertionError();
+//            return EDKeyPair.from128Seed(seedBytes);
+//        }  else {
+//            return createKeyPair(seedBytes, account);
+//        }
 
     }
     public static Seed fromBase58(String b58) {

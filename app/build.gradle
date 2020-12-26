@@ -5,7 +5,7 @@ android {
     buildToolsVersion "30.0.1"
 
     defaultConfig {
-        applicationId "com.library.aitd"
+        applicationId "com.example.aitd"
         minSdkVersion 16
         targetSdkVersion 30
         versionCode 1
@@ -30,4 +30,5 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
+    implementation project(path: ':aitd')
 }

@@ -4,7 +4,6 @@ import com.ripple.config.Config;
 import com.ripple.utils.HashUtils;
 
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Array;
 import java.math.BigInteger;
 import java.util.Arrays;
 
@@ -56,7 +55,7 @@ public class B58 {
      * @return
      */
     public boolean isXrp(){
-        return Arrays.toString(Config.DEFAULT_ALPHABET.toCharArray()).equals(Arrays.toString(mAlphabet));
+        return Arrays.toString(Config.ALPHABET_XRP.toCharArray()).equals(Arrays.toString(mAlphabet));
     }
 
     private void buildIndexes() {

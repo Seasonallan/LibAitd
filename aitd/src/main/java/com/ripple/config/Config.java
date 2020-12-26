@@ -8,7 +8,8 @@ import java.security.Security;
 
 // Somewhat of a global registry, dependency injection ala guice would be nicer, but trying to KISS
 public class Config {
-    public  static String DEFAULT_ALPHABET = "rpshnaf39wBUDNEGHJKLM4PQRST7VWXYZ2bcdeCg65jkm8oFqi1tuvAxyz";
+    public  static String ALPHABET_XRP = "rpshnaf39wBUDNEGHJKLM4PQRST7VWXYZ2bcdeCg65jkm8oFqi1tuvAxyz";
+    public  static String ALPHABET_AITD = "apshnrf39wBUDNEGHJKLM4PQRST7VWXYZ2bcdeCg65jkm8oFqi1tuvAxyz";
 
     private static B58IdentiferCodecs b58IdentiferCodecs;
     private static double feeCushion;
@@ -47,7 +48,7 @@ public class Config {
      * We set up all the defaults here
      */
     static {
-        setAlphabet(DEFAULT_ALPHABET);
+        setAlphabet(ALPHABET_XRP);
         setFeeCushion(1.1);
         initBouncy();
     }
