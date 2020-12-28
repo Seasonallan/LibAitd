@@ -14,56 +14,56 @@ import com.library.aitd.bean.XRPLedger;
 import com.library.aitd.bean.XRPTransaction;
 import com.library.aitd.bean.transaction.XRPAccount_Transaction;
 import com.library.aitd.bean.transaction.XRPAccount_TransactionList;
-import com.library.aitd.http.SimpleRequest;
-import com.ripple.config.Config;
-import com.ripple.core.coretypes.AccountID;
-import com.ripple.core.coretypes.Amount;
-import com.ripple.core.coretypes.uint.UInt32;
-import com.ripple.core.types.known.tx.signed.SignedTransaction;
-import com.ripple.core.types.known.tx.txns.Payment;
-
-import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
 
     TextView log;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-
-        boolean aitd = true;
+    boolean aitd = true;
+    private void changeMode(){
         if (aitd) {
-            //设置为AITD的base58规则
-            Config.setAlphabet(Config.ALPHABET_AITD);
             setTitle("测试AITD链功能");
+            //设置为AITD的base58规则
             AitdOpenApi.initSDK(Key.DOMAIN_AITD);
+            AitdOpenApi.switchCoinModeAITD();
         } else {
-            //设置为XRP的base58规则
-            Config.setAlphabet(Config.ALPHABET_XRP);
             setTitle("测试xrp链功能");
+            //设置为XRP的base58规则
             AitdOpenApi.initSDK(Key.DOMAIN_XRP);
+            AitdOpenApi.switchCoinModeXRP();
         }
-
-        log = findViewById(R.id.log);
 
         Key.checkTestAccount();
 
         fillContent("测试公钥（转账到该账户）：" + Key.testPublicKey);
         fillContent("测试私钥（拥有者）：" + Key.testPrivateKey);
-        fillContent("测试公钥（拥有者）：" + AitdOpenApi.getAddress(Key.testPrivateKey));
-        fillContent("当前使用网络：" + Key.DOMAIN_XRP);
+        fillContent("测试公钥（拥有者）：" + AitdOpenApi.Wallet.getAddress(Key.testPrivateKey));
+        fillContent("当前使用网络：" + AitdOpenApi.DOMAIN);
         fillContent("当前配置：");
+    }
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
+        log = findViewById(R.id.log);
+
+        changeMode();
+
+        findViewById(R.id.mode).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                aitd = !aitd;
+                changeMode();
+            }
+        });
         findViewById(R.id.fee).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        XRPFee xrpFee = AitdOpenApi.getFee();
+                        XRPFee xrpFee = AitdOpenApi.Request.getFee();
                         final StringBuffer stringBuffer = new StringBuffer();
                         stringBuffer.append("ledger_current_index：" + xrpFee.ledger_current_index);
                         stringBuffer.append("\nbase_fee：" + xrpFee.drops.base_fee);
@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        XRPAccount xrpAccount = AitdOpenApi.getAccountInfo(AitdOpenApi.getAddress(Key.testPrivateKey));
+                        XRPAccount xrpAccount = AitdOpenApi.Request.getAccountInfo(AitdOpenApi.Wallet.getAddress(Key.testPrivateKey));
                         final StringBuffer stringBuffer = new StringBuffer();
                         stringBuffer.append("当前余额：" + xrpAccount.account_data.Balance);
                         stringBuffer.append("\n当前序列：" + xrpAccount.account_data.Sequence);
@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        XRPAccount_TransactionList xrpAccountTransactionList = AitdOpenApi.getTransactionList(AitdOpenApi.getAddress(Key.testPrivateKey),
+                        XRPAccount_TransactionList xrpAccountTransactionList = AitdOpenApi.Request.getTransactionList(AitdOpenApi.Wallet.getAddress(Key.testPrivateKey),
                                 2, -1, -1);
                         final StringBuffer stringBuffer = new StringBuffer();
                         for (int i = 0; i < xrpAccountTransactionList.transactions.size(); i++) {
@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        XRPTransaction xrpTransaction = AitdOpenApi.transaction(Key.testPrivateKey,
+                        XRPTransaction xrpTransaction = AitdOpenApi.Request.transaction(Key.testPrivateKey,
                                 Key.testPublicKey, "10", "50");
 
                         final StringBuffer stringBuffer = new StringBuffer();
@@ -168,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        XRPLedger xrpLedger = AitdOpenApi.close();
+                        XRPLedger xrpLedger = AitdOpenApi.Request.close();
 
                         final StringBuffer stringBuffer = new StringBuffer();
                         stringBuffer.append("当前账本位置：" + xrpLedger.ledger_current_index);

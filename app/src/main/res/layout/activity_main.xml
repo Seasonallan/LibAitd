@@ -32,6 +32,13 @@
             android:orientation="vertical">
 
             <Button
+                android:id="@+id/mode"
+                style="@style/ButtonFill"
+                android:layout_marginTop="8dp"
+                android:text="切换XRP/AITD模式" />
+
+
+            <Button
                 android:id="@+id/fee"
                 style="@style/ButtonFill"
                 android:layout_marginTop="8dp"
