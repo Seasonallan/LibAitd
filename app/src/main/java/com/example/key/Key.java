@@ -13,7 +13,7 @@ public class Key {
 
     public static String DOMAIN_XRP_TEST_NET = "https://s.altnet.rippletest.net:51234";
     public static String DOMAIN_XRP_DEV_NET = "https://s.devnet.rippletest.net:51234";
-    public static String DOMAIN_XRP = "http://192.168.1.11:5005";  //aitd测试域名
+    public static String DOMAIN_XRP = "http://192.168.1.11:5005";  //xrp测试域名
     //public static  String DOMAIN_XRP = "https://s.altnet.rippletest.net:51234";  //xrp测试域名
 
     public static String DOMAIN_AITD_TEST = "http://192.168.1.10:5001";  //aitd测试域名
