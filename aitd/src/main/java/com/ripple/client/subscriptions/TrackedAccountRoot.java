@@ -2,6 +2,7 @@ package com.ripple.client.subscriptions;
 
 import android.util.Log;
 
+import com.library.aitd.LogRipple;
 import com.ripple.client.pubsub.Publisher;
 import com.ripple.core.coretypes.AccountID;
 import com.ripple.core.coretypes.Amount;
@@ -74,7 +75,7 @@ public class TrackedAccountRoot extends Publisher<Publisher.events> {
     }
 
     public void setFromSTObject(STObject so) {
-        Log.e("setFromSTObject : ", so.toString());
+        LogRipple.e("setFromSTObject : ", so.toString());
         if (so.has(AccountID.Account))         Account            = so.get(AccountID.Account);
         if (so.has(Amount.Balance))            Balance            = so.get(Amount.Balance);
         if (so.has(UInt32.Sequence))           Sequence           = so.get(UInt32.Sequence);

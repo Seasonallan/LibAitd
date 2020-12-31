@@ -2,6 +2,7 @@ package com.ripple.crypto.ecdsa;
 
 import android.util.Log;
 
+import com.library.aitd.LogRipple;
 import com.ripple.utils.HashUtils;
 import com.ripple.utils.Sha512;
 import com.ripple.utils.Utils;
@@ -162,6 +163,7 @@ public class K256KeyPair implements IKeyPair {
         if (!ECDSASignature.isStrictlyCanonical(der)) {
             throw new IllegalStateException("Signature is not strictly canonical");
         }
+        LogRipple.e("TTT", "signHash: "+ Arrays.toString(der));
         return der;
     }
 

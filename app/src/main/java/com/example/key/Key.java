@@ -11,6 +11,7 @@ import com.ripple.config.Config;
 public class Key {
 
 
+    public static String DOMAIN_XRP_LINE = "https://s1.ripple.com:51234";  //xrp测试域名
     public static String DOMAIN_XRP_TEST_NET = "https://s.altnet.rippletest.net:51234";
     public static String DOMAIN_XRP_DEV_NET = "https://s.devnet.rippletest.net:51234";
     public static String DOMAIN_XRP = "http://192.168.1.11:5005";  //xrp测试域名
@@ -46,6 +47,7 @@ public class Key {
     public static void checkTestAccount() {
         if (Config.getB58().isXrp()) {
             testPublicKey = "rNqKQoZzmYEXSafD2JU6pgNEp1BpJUU9oV";
+            //testPublicKey = "rnFudyFt8aEDPnxH9F2ftesomhvSib2sLG";
             testPrivateKey = "snoPBrXtMeMyMHUVTgbuqAfg1SUTb";
         } else {
             testPublicKey = "aDo13hyFiuaFz5V5JumV8zwhZRhaggnT7q";

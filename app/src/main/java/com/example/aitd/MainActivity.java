@@ -1,6 +1,7 @@
 package com.example.aitd;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -8,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.key.Key;
 import com.library.aitd.AitdOpenApi;
+import com.library.aitd.LogRipple;
 import com.library.aitd.bean.XRPAccount;
 import com.library.aitd.bean.XRPFee;
 import com.library.aitd.bean.XRPLedger;
@@ -19,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
     TextView log;
 
-    boolean aitd = true;
+    boolean aitd = false;
     private void changeMode(){
         if (aitd) {
             setTitle("测试AITD链功能");
@@ -133,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         XRPTransaction xrpTransaction = AitdOpenApi.Request.transaction(Key.testPrivateKey,
-                                Key.testPublicKey, "10", "50");
+                                Key.testPublicKey, "100", "250");
 
                         final StringBuffer stringBuffer = new StringBuffer();
                         stringBuffer.append("交易结果：" + xrpTransaction.engine_result_message);
@@ -191,6 +193,7 @@ public class MainActivity extends AppCompatActivity {
      * @param response
      */
     public void fillContent(String response) {
+        LogRipple.e("TTT", response);
         log.setText(response + "\n" + log.getText().toString());
     }
 }

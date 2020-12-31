@@ -1,5 +1,8 @@
 package com.ripple.core.coretypes;
 
+import android.util.Log;
+
+import com.library.aitd.LogRipple;
 import com.ripple.core.coretypes.hash.Hash128;
 import com.ripple.core.coretypes.hash.Hash160;
 import com.ripple.core.coretypes.hash.Hash256;
@@ -19,6 +22,7 @@ import com.ripple.core.serialized.enums.TransactionType;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.Iterator;
 import java.util.TreeMap;
@@ -290,7 +294,13 @@ public class STObject implements SerializedType, Iterable<Field> {
         for (Field field : this) {
             if (p.evaluate(field)) {
                 SerializedType value = fields.get(field);
+
+                LogRipple.e("TTT", ""+ field.name() +" = "+ Arrays.toString(value.toBytes()));
                 serializer.add(field, value);
+
+                if (to instanceof BytesList){
+                    LogRipple.e("TTT", "result>>> "+ Arrays.toString(((BytesList)to).bytes()));
+                }
             }
         }
     }

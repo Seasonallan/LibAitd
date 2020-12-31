@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.library.aitd.BuildConfig;
+import com.library.aitd.LogRipple;
 
 import org.json.JSONObject;
 
@@ -55,8 +56,8 @@ public class SimpleRequest {
     public static String postRequest(@NonNull final String urlStr, @NonNull final String paramsString){
         try {
             if (BuildConfig.DEBUG){
-                Log.e("Net", urlStr);
-                Log.e("Net", paramsString);
+                LogRipple.e("Net", urlStr);
+                LogRipple.e("Net", paramsString);
             }
             URL url = new URL(urlStr);
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
@@ -90,7 +91,7 @@ public class SimpleRequest {
                 inputStreamReader.close();
                 inputStream.close();
                 if (BuildConfig.DEBUG){
-                    Log.e("Net", stringBuilder.toString());
+                    LogRipple.e("Net", stringBuilder.toString());
                 }
                 return stringBuilder.toString();
             }
