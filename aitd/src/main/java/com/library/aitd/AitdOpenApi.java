@@ -220,7 +220,7 @@ public class AitdOpenApi {
                 String tx_blob = signed.tx_blob;
                 return transaction(tx_blob);
             }else{
-                return new XRPTransaction();
+                return null;
             }
         }
 
