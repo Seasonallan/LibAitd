@@ -207,17 +207,21 @@ public class AitdOpenApi {
         public static XRPTransaction transaction(String seed, String destination, String fee, String amount) {
             String address = Wallet.getAddress(seed);
             XRPAccount xrpAccount = getAccountInfo(address);
-            Payment payment = new Payment();
-            payment.as(AccountID.Account, address);
-            payment.as(AccountID.Destination, destination);
-            payment.as(UInt32.DestinationTag, "1");
-            payment.as(Amount.Amount, amount);
-            payment.as(UInt32.Sequence, xrpAccount.account_data.Sequence);
-            payment.as(UInt32.LastLedgerSequence, xrpAccount.ledger_current_index + 1);
-            payment.as(Amount.Fee, fee);
-            SignedTransaction signed = payment.sign(seed);
-            String tx_blob = signed.tx_blob;
-            return transaction(tx_blob);
+            if (xrpAccount != null && xrpAccount.account_data != null){
+                Payment payment = new Payment();
+                payment.as(AccountID.Account, address);
+                payment.as(AccountID.Destination, destination);
+                payment.as(UInt32.DestinationTag, "1");
+                payment.as(Amount.Amount, amount);
+                payment.as(UInt32.Sequence, xrpAccount.account_data.Sequence);
+                payment.as(UInt32.LastLedgerSequence, xrpAccount.ledger_current_index + 1);
+                payment.as(Amount.Fee, fee);
+                SignedTransaction signed = payment.sign(seed);
+                String tx_blob = signed.tx_blob;
+                return transaction(tx_blob);
+            }else{
+                return new XRPTransaction();
+            }
         }
 
         /**

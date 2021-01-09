@@ -1,5 +1,6 @@
 package com.ripple.core.types.known.tx;
 
+import com.library.aitd.LogRipple;
 import com.ripple.core.coretypes.AccountID;
 import com.ripple.core.coretypes.Amount;
 import com.ripple.core.coretypes.Blob;
@@ -17,6 +18,8 @@ import com.ripple.core.serialized.enums.TransactionType;
 import com.ripple.core.types.known.tx.signed.SignedTransaction;
 import com.ripple.crypto.ecdsa.IKeyPair;
 import com.ripple.utils.HashUtils;
+
+import java.util.Arrays;
 
 public class Transaction extends STObject {
     public static final boolean CANONICAL_FLAG_DEPLOYED = true;
@@ -57,6 +60,7 @@ public class Transaction extends STObject {
     public byte[] signingData() {
         BytesList bl = new BytesList();
         bl.add(HashPrefix.txSign.bytes);
+        LogRipple.e("TTT", "开始转化>>> "+ Arrays.toString(bl.bytes()));
         toBytesSink(bl, new FieldFilter() {
             @Override
             public boolean evaluate(Field a) {

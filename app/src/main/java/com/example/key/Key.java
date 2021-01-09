@@ -50,7 +50,7 @@ public class Key {
             //testPublicKey = "rnFudyFt8aEDPnxH9F2ftesomhvSib2sLG";
             testPrivateKey = "snoPBrXtMeMyMHUVTgbuqAfg1SUTb";
         } else {
-            testPublicKey = "aDo13hyFiuaFz5V5JumV8zwhZRhaggnT7q";
+            testPublicKey = "aLmeV13APu4GTVXwfeNX2Bthz3iyCpDZFB";
             testPrivateKey = "snSLAVhXrCaujxsbwaazU3cfLQBJm";
         }
     }
