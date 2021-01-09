@@ -53,12 +53,10 @@ public class SimpleRequest {
     }
 
 
-    public static String postRequest(@NonNull final String urlStr, @NonNull final String paramsString){
+    public static String postRequest(@NonNull final String urlStr, @NonNull final String paramsString) {
         try {
-            if (BuildConfig.DEBUG){
-                LogRipple.e("Net", urlStr);
-                LogRipple.e("Net", paramsString);
-            }
+            LogRipple.e("Net", urlStr);
+            LogRipple.e("Net", paramsString);
             URL url = new URL(urlStr);
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.setConnectTimeout(5000);
@@ -90,12 +88,11 @@ public class SimpleRequest {
                 bufferedReader.close();
                 inputStreamReader.close();
                 inputStream.close();
-                if (BuildConfig.DEBUG){
-                    LogRipple.e("Net", stringBuilder.toString());
-                }
-                return stringBuilder.toString();
+                String response = stringBuilder.toString();
+                LogRipple.e("Net", response);
+                return response;
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;

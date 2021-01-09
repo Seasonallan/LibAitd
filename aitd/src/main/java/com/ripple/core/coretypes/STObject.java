@@ -1,8 +1,5 @@
 package com.ripple.core.coretypes;
 
-import android.util.Log;
-
-import com.library.aitd.LogRipple;
 import com.ripple.core.coretypes.hash.Hash128;
 import com.ripple.core.coretypes.hash.Hash160;
 import com.ripple.core.coretypes.hash.Hash256;
@@ -10,11 +7,31 @@ import com.ripple.core.coretypes.uint.UInt16;
 import com.ripple.core.coretypes.uint.UInt32;
 import com.ripple.core.coretypes.uint.UInt64;
 import com.ripple.core.coretypes.uint.UInt8;
-import com.ripple.core.fields.*;
+import com.ripple.core.fields.AccountIDField;
+import com.ripple.core.fields.AmountField;
+import com.ripple.core.fields.BlobField;
+import com.ripple.core.fields.Field;
+import com.ripple.core.fields.HasField;
+import com.ripple.core.fields.Hash128Field;
+import com.ripple.core.fields.Hash160Field;
+import com.ripple.core.fields.Hash256Field;
+import com.ripple.core.fields.PathSetField;
+import com.ripple.core.fields.STArrayField;
+import com.ripple.core.fields.STObjectField;
+import com.ripple.core.fields.Type;
+import com.ripple.core.fields.UInt16Field;
+import com.ripple.core.fields.UInt32Field;
+import com.ripple.core.fields.UInt64Field;
+import com.ripple.core.fields.UInt8Field;
+import com.ripple.core.fields.Vector256Field;
 import com.ripple.core.formats.Format;
 import com.ripple.core.formats.LEFormat;
 import com.ripple.core.formats.TxFormat;
-import com.ripple.core.serialized.*;
+import com.ripple.core.serialized.BinaryParser;
+import com.ripple.core.serialized.BinarySerializer;
+import com.ripple.core.serialized.BytesSink;
+import com.ripple.core.serialized.SerializedType;
+import com.ripple.core.serialized.TypeTranslator;
 import com.ripple.core.serialized.enums.EngineResult;
 import com.ripple.core.serialized.enums.LedgerEntryType;
 import com.ripple.core.serialized.enums.TransactionType;
@@ -22,7 +39,6 @@ import com.ripple.core.serialized.enums.TransactionType;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.Iterator;
 import java.util.TreeMap;
@@ -294,13 +310,7 @@ public class STObject implements SerializedType, Iterable<Field> {
         for (Field field : this) {
             if (p.evaluate(field)) {
                 SerializedType value = fields.get(field);
-
-                LogRipple.e("TTT", ""+ field.name() +" = "+ Arrays.toString(value.toBytes()));
                 serializer.add(field, value);
-
-                if (to instanceof BytesList){
-                    LogRipple.e("TTT", "result>>> "+ Arrays.toString(((BytesList)to).bytes()));
-                }
             }
         }
     }

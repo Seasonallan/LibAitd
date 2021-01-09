@@ -73,11 +73,8 @@ public class SignedTransaction {
             txn.setCanonicalSignatureFlag();
         }
 
-        LogRipple.e("TTT", "原始数据："+ txn.toJSONObject().toString());
-
         txn.checkFormat();
         signingData = txn.signingData();
-        LogRipple.e("TTT", "转化数据："+ Arrays.toString(signingData));
         if (previousSigningData != null && Arrays.equals(signingData, previousSigningData)) {
             return;
         }
@@ -87,7 +84,6 @@ public class SignedTransaction {
             HalfSha512 id = HalfSha512.prefixed256(HashPrefix.transactionID);
             txn.toBytesSink(new MultiSink(blob, id));
             tx_blob = blob.bytesHex();
-            LogRipple.e("TTT", "签名数据："+ tx_blob);
             hash = id.finish();
         } catch (Exception e) {
             previousSigningData = null;

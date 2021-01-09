@@ -1,11 +1,9 @@
 package com.ripple.crypto.ecdsa;
 
-import android.util.Log;
-
-import com.library.aitd.LogRipple;
 import com.ripple.utils.HashUtils;
 import com.ripple.utils.Sha512;
 import com.ripple.utils.Utils;
+
 import org.bouncycastle.crypto.digests.SHA256Digest;
 import org.bouncycastle.crypto.params.ECPrivateKeyParameters;
 import org.bouncycastle.crypto.params.ECPublicKeyParameters;
@@ -14,7 +12,6 @@ import org.bouncycastle.crypto.signers.HMacDSAKCalculator;
 import org.bouncycastle.math.ec.ECPoint;
 
 import java.math.BigInteger;
-import java.util.Arrays;
 
 public class K256KeyPair implements IKeyPair {
     BigInteger priv, pub;
@@ -163,7 +160,6 @@ public class K256KeyPair implements IKeyPair {
         if (!ECDSASignature.isStrictlyCanonical(der)) {
             throw new IllegalStateException("Signature is not strictly canonical");
         }
-        LogRipple.e("TTT", "signHash: "+ Arrays.toString(der));
         return der;
     }
 
