@@ -17,17 +17,29 @@ import com.library.aitd.bean.XRPTransaction;
 import com.library.aitd.bean.transaction.XRPAccount_Transaction;
 import com.library.aitd.bean.transaction.XRPAccount_TransactionList;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     TextView log;
 
     boolean aitd = true;
-    private void changeMode(){
+
+    private void changeMode() {
         if (aitd) {
             setTitle("测试AITD链功能");
             //设置为AITD的base58规则
             AitdOpenApi.initSDK(Key.DOMAIN_AITD);
             AitdOpenApi.switchCoinModeAITD();
+
+            List<String> n = new ArrayList<>();
+            String[] nn = "message trust trust path broccoli cherry female amateur border luggage kangaroo poverty".split(" ");
+            for (int i = 0; i < nn.length; i++) {
+                n.add(nn[i]);
+            }
+            String s = AitdOpenApi.Wallet.createFromMnemonic(n);
+            fillContent("助记词生成私钥：" + s);
         } else {
             setTitle("测试xrp链功能");
             //设置为XRP的base58规则
@@ -43,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         fillContent("当前使用网络：" + AitdOpenApi.DOMAIN);
         fillContent("当前配置：");
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
                     public void run() {
                         XRPFee xrpFee = AitdOpenApi.Request.getFee();
                         final StringBuffer stringBuffer = new StringBuffer();
-                        if (xrpFee != null){
+                        if (xrpFee != null) {
                             stringBuffer.append("ledger_current_index：" + xrpFee.ledger_current_index);
                             stringBuffer.append("\nbase_fee：" + xrpFee.drops.base_fee);
                             stringBuffer.append("\nopen_ledger_fee：" + xrpFee.drops.open_ledger_fee);
@@ -90,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
                     public void run() {
                         XRPAccount xrpAccount = AitdOpenApi.Request.getAccountInfo(AitdOpenApi.Wallet.getAddress(Key.testPrivateKey));
                         final StringBuffer stringBuffer = new StringBuffer();
-                        if (xrpAccount.account_data != null){
+                        if (xrpAccount.account_data != null) {
                             stringBuffer.append("当前余额：" + xrpAccount.account_data.Balance);
                             stringBuffer.append("\n当前序列：" + xrpAccount.account_data.Sequence);
                         }
@@ -114,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
                         XRPAccount_TransactionList xrpAccountTransactionList = AitdOpenApi.Request.getTransactionList(AitdOpenApi.Wallet.getAddress(Key.testPrivateKey),
                                 2, -1, -1);
                         final StringBuffer stringBuffer = new StringBuffer();
-                        if (xrpAccountTransactionList != null && xrpAccountTransactionList.transactions!= null){
+                        if (xrpAccountTransactionList != null && xrpAccountTransactionList.transactions != null) {
                             for (int i = 0; i < xrpAccountTransactionList.transactions.size(); i++) {
                                 XRPAccount_Transaction item = xrpAccountTransactionList.transactions.get(i);
                                 stringBuffer.append("转账 " + item.tx.Amount + " 到地址：" + item.tx.Destination);
@@ -141,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         XRPTransaction xrpTransaction = AitdOpenApi.Request.transaction(Key.testPrivateKey,
-                                Key.testPublicKey, "100", "20000000"); //20000000
+                                Key.testPublicKey, "100", "500"); //20000000
 
                         final StringBuffer stringBuffer = new StringBuffer();
                         stringBuffer.append("交易结果：" + xrpTransaction.engine_result_message);
