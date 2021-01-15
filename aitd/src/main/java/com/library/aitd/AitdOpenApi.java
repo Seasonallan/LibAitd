@@ -205,13 +205,22 @@ public class AitdOpenApi {
          * @return
          */
         public static XRPTransaction transaction(String seed, String destination, String fee, String amount) {
+            return transaction(seed, destination, fee, amount, "1");
+        }
+
+        /**
+         * 转账
+         *
+         * @return
+         */
+        public static XRPTransaction transaction(String seed, String destination, String fee, String amount, String tag) {
             String address = Wallet.getAddress(seed);
             XRPAccount xrpAccount = getAccountInfo(address);
             if (xrpAccount != null && xrpAccount.account_data != null){
                 Payment payment = new Payment();
                 payment.as(AccountID.Account, address);
                 payment.as(AccountID.Destination, destination);
-                payment.as(UInt32.DestinationTag, "1");
+                payment.as(UInt32.DestinationTag, tag);
                 payment.as(Amount.Amount, amount);
                 payment.as(UInt32.Sequence, xrpAccount.account_data.Sequence);
                 payment.as(UInt32.LastLedgerSequence, xrpAccount.ledger_current_index + 1);
