@@ -154,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         XRPTransaction xrpTransaction = AitdOpenApi.Request.transaction(Key.testPrivateKey,
-                                Key.testPublicKey, "100", "500"); //20000000
+                                Key.testPublicKey, "100", "500000000000000000"); //20000000
 
                         final StringBuffer stringBuffer = new StringBuffer();
                         stringBuffer.append("交易结果：" + xrpTransaction.engine_result_message);

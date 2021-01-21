@@ -73,6 +73,20 @@ public class AitdOpenApi {
         }
 
         /**
+         * 地址是否有效
+         * @return
+         */
+        public static boolean isAddressValid(String address){
+            try {
+                AccountID.fromAddress(address);
+                return true;
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            return false;
+        }
+
+        /**
          * 通过助记词创建钱包
          *
          * @param list
