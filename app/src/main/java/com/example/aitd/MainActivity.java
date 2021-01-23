@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
             }
             String s = AitdOpenApi.Wallet.createFromMnemonic(n);
             fillContent("助记词生成私钥：" + s);
+            fillContent("助记词生成地址：" + AitdOpenApi.Wallet.getAddress(s));
         } else {
             setTitle("测试xrp链功能");
             //设置为XRP的base58规则
@@ -154,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         XRPTransaction xrpTransaction = AitdOpenApi.Request.transaction(Key.testPrivateKey,
-                                Key.testPublicKey, "100", "500000000000000000"); //20000000
+                                Key.testPublicKey, "100", "500000000000000"); //20000000
 
                         final StringBuffer stringBuffer = new StringBuffer();
                         stringBuffer.append("交易结果：" + xrpTransaction.engine_result_message);
@@ -182,6 +183,77 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+        findViewById(R.id.transaction_error).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        XRPTransaction xrpTransaction = AitdOpenApi.Request.transaction(Key.testPrivateKey,
+                                Key.testPublicKey, "1", "5000000000"); //20000000
+
+                        final StringBuffer stringBuffer = new StringBuffer();
+                        stringBuffer.append("交易结果：" + xrpTransaction.engine_result_message);
+                        if (xrpTransaction.isSuccess()) {
+                            stringBuffer.append("\n成功，信息： ");
+                            stringBuffer.append("\nAccount：" + xrpTransaction.tx_json.Account);
+                            stringBuffer.append("\nDestination：" + xrpTransaction.tx_json.Destination);
+                            stringBuffer.append("\nSigningPubKey：" + xrpTransaction.tx_json.SigningPubKey);
+                            stringBuffer.append("\nFee：" + xrpTransaction.tx_json.Fee);
+                            stringBuffer.append("\nLastLedgerSequence：" + xrpTransaction.tx_json.LastLedgerSequence);
+                            stringBuffer.append("\nSequence：" + xrpTransaction.tx_json.Sequence);
+                            stringBuffer.append("\nTxnSignature：" + xrpTransaction.tx_json.TxnSignature);
+                            stringBuffer.append("\nhash：" + xrpTransaction.tx_json.hash);
+                        } else {
+                            stringBuffer.append("\n交易失败：错误码 = " + xrpTransaction.engine_result_code);
+                        }
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                fillContent(stringBuffer.toString());
+                            }
+                        });
+                    }
+                }).start();
+            }
+        });
+
+
+        findViewById(R.id.transaction_error2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        XRPTransaction xrpTransaction = AitdOpenApi.Request.transaction(Key.testPrivateKey,
+                                "aM32AGvfn3YncQHgabtHW42r7jAmA9psyh", "10", "5"); //20000000
+
+                        final StringBuffer stringBuffer = new StringBuffer();
+                        stringBuffer.append("交易结果：" + xrpTransaction.engine_result_message);
+                        if (xrpTransaction.isSuccess()) {
+                            stringBuffer.append("\n成功，信息： ");
+                            stringBuffer.append("\nAccount：" + xrpTransaction.tx_json.Account);
+                            stringBuffer.append("\nDestination：" + xrpTransaction.tx_json.Destination);
+                            stringBuffer.append("\nSigningPubKey：" + xrpTransaction.tx_json.SigningPubKey);
+                            stringBuffer.append("\nFee：" + xrpTransaction.tx_json.Fee);
+                            stringBuffer.append("\nLastLedgerSequence：" + xrpTransaction.tx_json.LastLedgerSequence);
+                            stringBuffer.append("\nSequence：" + xrpTransaction.tx_json.Sequence);
+                            stringBuffer.append("\nTxnSignature：" + xrpTransaction.tx_json.TxnSignature);
+                            stringBuffer.append("\nhash：" + xrpTransaction.tx_json.hash);
+                        } else {
+                            stringBuffer.append("\n交易失败：错误码 = " + xrpTransaction.engine_result_code);
+                        }
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                fillContent(stringBuffer.toString());
+                            }
+                        });
+                    }
+                }).start();
+            }
+        });
 
         findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
             @Override

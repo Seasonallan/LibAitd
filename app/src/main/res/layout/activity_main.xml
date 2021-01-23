@@ -20,8 +20,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="16dp"
-                android:textColor="@android:color/white"
                 android:text=""
+                android:textColor="@android:color/white"
                 android:textSize="13sp" />
 
         </ScrollView>
@@ -61,6 +61,18 @@
                 style="@style/ButtonFill"
                 android:layout_marginTop="8dp"
                 android:text="发起一笔转账" />
+
+            <Button
+                android:id="@+id/transaction_error"
+                style="@style/ButtonFill"
+                android:layout_marginTop="8dp"
+                android:text="发起一笔错误转账(FEE)" />
+
+            <Button
+                android:id="@+id/transaction_error2"
+                style="@style/ButtonFill"
+                android:layout_marginTop="8dp"
+                android:text="发起一笔错误转账(AMOUNT)" />
 
             <Button
                 android:id="@+id/close"
