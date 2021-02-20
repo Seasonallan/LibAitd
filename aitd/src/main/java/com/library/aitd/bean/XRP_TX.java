@@ -1,5 +1,6 @@
 package com.library.aitd.bean;
 
+import com.library.aitd.LogRipple;
 import com.library.aitd.bean.base.BaseDao;
 import com.library.aitd.bean.base.Json;
 
@@ -85,7 +86,7 @@ public class XRP_TX extends BaseDao implements Serializable {
         try {
             time += Long.parseLong(date);
         } catch (Exception e) {
-            e.printStackTrace();
+            LogRipple.error("exception", e);
         }
         return date;//DateUtils.formatDateTime(time * 1000 + 8 * 60 * 60 * 1000, "yyyy-MM-dd HH:mm:ss");
     }

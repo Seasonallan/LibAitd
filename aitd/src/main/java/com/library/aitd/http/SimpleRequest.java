@@ -1,13 +1,8 @@
 package com.library.aitd.http;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 
-import com.library.aitd.BuildConfig;
 import com.library.aitd.LogRipple;
-
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -93,7 +88,8 @@ public class SimpleRequest {
                 return response;
             }
         } catch (Exception e) {
-            e.printStackTrace();
+
+            LogRipple.error("exception", e);
         }
         return null;
     }

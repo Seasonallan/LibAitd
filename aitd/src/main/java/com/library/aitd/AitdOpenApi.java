@@ -81,7 +81,7 @@ public class AitdOpenApi {
                 AccountID.fromAddress(address);
                 return true;
             }catch (Exception e){
-                e.printStackTrace();
+                LogRipple.error("exception", e);
             }
             return false;
         }
@@ -143,7 +143,7 @@ public class AitdOpenApi {
                 JSONObject responseObject = new JSONObject(res);
                 xrpFee.fromJsonObject(responseObject.getJSONObject("result"));
             } catch (Exception e) {
-                e.printStackTrace();
+                LogRipple.error("exception", e);
             }
             return xrpFee;
         }
@@ -160,7 +160,7 @@ public class AitdOpenApi {
             try {
                 jsonObject.put("account", address);
             } catch (JSONException e) {
-                e.printStackTrace();
+                LogRipple.error("exception", e);
             }
 
             transactionParams.put(jsonObject);
@@ -170,7 +170,7 @@ public class AitdOpenApi {
                 JSONObject responseObject = new JSONObject(res);
                 xrpAccount.fromJsonObject(responseObject.getJSONObject("result"));
             } catch (Exception e) {
-                e.printStackTrace();
+                LogRipple.error("exception", e);
             }
             return xrpAccount;
         }
@@ -198,7 +198,7 @@ public class AitdOpenApi {
                 }
 
             } catch (JSONException e) {
-                e.printStackTrace();
+                LogRipple.error("exception", e);
             }
             transactionParams.put(jsonObject);
             String res = SimpleRequest.postRequest(DOMAIN, buildRequestBody("account_tx", transactionParams));
@@ -207,7 +207,7 @@ public class AitdOpenApi {
                 JSONObject responseObject = new JSONObject(res);
                 xrpAccountTransactionList.fromJsonObject(responseObject.getJSONObject("result"));
             } catch (Exception e) {
-                e.printStackTrace();
+                LogRipple.error("exception", e);
             }
             return xrpAccountTransactionList;
         }
@@ -258,7 +258,7 @@ public class AitdOpenApi {
             try {
                 jsonObject.put("tx_blob", tx_blob);
             } catch (JSONException e) {
-                e.printStackTrace();
+                LogRipple.error("exception", e);
             }
 
             transactionParams.put(jsonObject);
@@ -269,7 +269,7 @@ public class AitdOpenApi {
                 JSONObject responseObject = new JSONObject(res);
                 xrpTransaction.fromJsonObject(responseObject.getJSONObject("result"));
             } catch (Exception e) {
-                e.printStackTrace();
+                LogRipple.error("exception", e);
             }
             return xrpTransaction;
         }
@@ -290,7 +290,7 @@ public class AitdOpenApi {
                 JSONObject responseObject = new JSONObject(res);
                 xrpLedger.fromJsonObject(responseObject.getJSONObject("result"));
             } catch (Exception e) {
-                e.printStackTrace();
+                LogRipple.error("exception", e);
             }
             return xrpLedger;
         }
@@ -302,7 +302,7 @@ public class AitdOpenApi {
                 js_request.put("method", method);
                 js_request.put("params", params);
             } catch (JSONException e) {
-                e.printStackTrace();
+                LogRipple.error("exception", e);
             }
             return js_request.toString();
         }

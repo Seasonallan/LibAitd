@@ -17,9 +17,10 @@ public class Key {
     public static String DOMAIN_XRP = "http://192.168.1.11:5005";  //xrp测试域名
     //public static  String DOMAIN_XRP = "https://s.altnet.rippletest.net:51234";  //xrp测试域名
 
-    public static String DOMAIN_AITD_TEST = "http://192.168.1.10:5001";  //aitd测试域名
+    public static String DOMAIN_AITD_TEST2 = "http://192.168.1.11:5001";  //aitd测试域名
+    public static String DOMAIN_AITD_TEST = "http://api.aitd.io:19391";  //aitd测试域名
     public static String DOMAIN_AITD_PRE = "http://172.31.10.48:19391";  //aitd开发环境
-    public static String DOMAIN_AITD = DOMAIN_AITD_PRE;  //aitd测试域名
+    public static String DOMAIN_AITD = DOMAIN_AITD_TEST;  //aitd测试域名
     /**
      * XRP瑞波币 域名
      * 正式环境
@@ -50,8 +51,9 @@ public class Key {
             //testPublicKey = "rnFudyFt8aEDPnxH9F2ftesomhvSib2sLG";
             testPrivateKey = "snoPBrXtMeMyMHUVTgbuqAfg1SUTb";
         } else {
-            testPublicKey = "aLmeV13APu4GTVXwfeNX2Bthz3iyCpDZFB";
-            testPrivateKey = "snSLAVhXrCaujxsbwaazU3cfLQBJm";
+            testPublicKey = "aJ45jxL6kw3tMyRkCRMJ5ypTVLcYRLavqo";
+            testPrivateKey = "snHs3NZGwhLSDfcMKqtV1PMMgc1CZ";
+            testPrivateKey = "sn8mQYrqsy1mjBYD7t2znuYKr9Nt3";
         }
     }
 

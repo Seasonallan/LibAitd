@@ -1,5 +1,6 @@
 package com.library.aitd.bean;
 
+import com.library.aitd.LogRipple;
 import com.library.aitd.bean.transaction.XRPAccount_Meta;
 
 import java.io.Serializable;
@@ -44,7 +45,7 @@ public class XRPTransactionDetail extends BaseResult implements Serializable {
         try {
             time += Long.parseLong(date);
         } catch (Exception e) {
-            e.printStackTrace();
+            LogRipple.error("exception", e);
         }
         return date;//DateUtils.formatDateTime(time * 1000 + 8 * 60 * 60 * 1000, "yyyy-MM-dd HH:mm:ss");
     }
