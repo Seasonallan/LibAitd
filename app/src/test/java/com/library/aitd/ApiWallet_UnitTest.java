@@ -1,8 +1,5 @@
 package com.library.aitd;
 
-import android.os.Handler;
-import android.os.Looper;
-
 import com.library.aitd.bean.XRPAccount;
 
 import java.io.File;
@@ -42,7 +39,7 @@ public class ApiWallet_UnitTest extends BaseUnitTest {
 
     List<RegisterThread> threadList = new ArrayList<>();
 
-    int perCount = endIndex/50;
+    int perCount = endIndex / 50;
 
     @Override
     protected void proceed() {
@@ -82,7 +79,7 @@ public class ApiWallet_UnitTest extends BaseUnitTest {
         int count;
         int end;
 
-        RegisterThread( int id, int start, int end) {
+        RegisterThread(int id, int start, int end) {
             this.id = id;
             this.start = start;
             this.end = end;
@@ -97,7 +94,7 @@ public class ApiWallet_UnitTest extends BaseUnitTest {
             LogRipple.print("线程" + id + ">>proceed>> 数据剩余：" + (end - start));
             if (start < end) {
                 start++;
-                if ((end - start) % count == 0){
+                if ((end - start) % count == 0) {
                     LogRipple.printForce("线程" + id + ">>proceed>> 数据剩余：" + (end - start));
                 }
                 accountCheck();
@@ -111,19 +108,27 @@ public class ApiWallet_UnitTest extends BaseUnitTest {
                 @Override
                 public void run() {
                     try {
-                        String seed = AitdOpenApi.Wallet.createRandomWallet();
+                        List<String> mnemonicList = AitdOpenApi.Wallet.createRandomMnemonic();
+                        String seed = AitdOpenApi.Wallet.createFromMnemonic(mnemonicList);
                         LogRipple.print(seed);
                         XRPAccount xrpAccount = AitdOpenApi.Request.getAccountInfo(AitdOpenApi.Wallet.getAddress(seed));
                         if (xrpAccount != null) {
-                            if (xrpAccount.account_data != null){
+                            if (xrpAccount.account_data != null) {
                                 String balance = xrpAccount.account_data.Balance;
                                 LogRipple.printForce(seed + ":" + balance);
                                 File file = new File(path);
-                                String content = seed + ":" + balance + "\n";
+
+                                StringBuilder stringBuilder = new StringBuilder();
+                                for (String str : mnemonicList) {
+                                    stringBuilder.append(str).append(" ");
+                                }
+                                stringBuilder.append(seed).append(">>");
+                                stringBuilder.append(balance).append("\n");
+
                                 FileWriter fileWriter = null;
                                 try {
                                     fileWriter = new FileWriter(file, true);
-                                    fileWriter.write(content);
+                                    fileWriter.write(stringBuilder.toString());
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 } finally {
@@ -134,7 +139,7 @@ public class ApiWallet_UnitTest extends BaseUnitTest {
                                     } catch (Exception e) {
                                     }
                                 }
-                            }else{
+                            } else {
                                 LogRipple.print(seed + "--:" + xrpAccount.error_message);
                             }
                         }
