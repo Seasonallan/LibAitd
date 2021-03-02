@@ -36,4 +36,6 @@ dependencies {
     testImplementation 'org.json:json:20140107'
 
     implementation project(path: ':aitd')
+    //btc
+    implementation 'com.github.Seasonallan:LibBtc:1.0'
 }

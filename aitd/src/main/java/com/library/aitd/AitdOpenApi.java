@@ -165,6 +165,7 @@ public class AitdOpenApi {
 
             transactionParams.put(jsonObject);
             String res = SimpleRequest.postRequest(DOMAIN, buildRequestBody("account_info", transactionParams));
+            //LogRipple.printForce(address + "--:" + res);
             XRPAccount xrpAccount = new XRPAccount();
             try {
                 JSONObject responseObject = new JSONObject(res);

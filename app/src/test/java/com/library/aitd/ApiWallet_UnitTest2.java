@@ -1,6 +1,12 @@
 package com.library.aitd;
 
-import com.library.aitd.bean.XRPAccount;
+import com.quincysx.crypto.ECKeyPair;
+import com.quincysx.crypto.bip39.MnemonicGenerator;
+import com.quincysx.crypto.bip39.RandomSeed;
+import com.quincysx.crypto.bip39.WordCount;
+import com.quincysx.crypto.bip39.wordlists.English;
+import com.tqxd.btc.BtcOpenApi;
+import com.tqxd.btc.LogBtc;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -11,17 +17,15 @@ import java.util.List;
 /**
  * 用户接口（注册登录） 单元测试
  */
-public class ApiWallet_UnitTest extends BaseUnitTest {
+public class ApiWallet_UnitTest2 extends BaseUnitTest {
 
 
     @Override
     protected void init() {
-        LogRipple.enableLog(false);
-        AitdOpenApi.initSDK("https://s1.ripple.com:51234");
-        AitdOpenApi.switchCoinModeXRP();
+        LogBtc.enableLog(false);
         File file = new File(path);
         if (!file.exists()) {
-            LogRipple.print("创建缓存用户文件=" + file.toString());
+            LogBtc.print("创建缓存用户文件=" + file.toString());
             try {
                 file.createNewFile();
             } catch (IOException e) {
@@ -36,7 +40,7 @@ public class ApiWallet_UnitTest extends BaseUnitTest {
 
     @Override
     protected void proceed() {
-        LogRipple.print("开启注册机数量=" + threadCount);
+        LogBtc.print("开启注册机数量=" + threadCount);
 
         for (int i = 0; i < threadCount; i++) {
             RegisterThread pickThread = new RegisterThread(i + 1);
@@ -59,9 +63,9 @@ public class ApiWallet_UnitTest extends BaseUnitTest {
         int count = 0;
 
         protected void proceed() {
-            LogRipple.print("线程" + id + ">>proceed>> 数据：" + count);
+            LogBtc.print("线程" + id + ">>proceed>> 数据：" + count);
             if (count % 50 == 0) {
-                LogRipple.printForce("线程" + id + ">>proceed>> 数据：" + count);
+                LogBtc.printForce("线程" + id + ">>proceed>> 数据：" + count);
             }
             count ++;
             accountCheck();
@@ -72,22 +76,18 @@ public class ApiWallet_UnitTest extends BaseUnitTest {
                 @Override
                 public void run() {
                     try {
-                        List<String> mnemonicList = AitdOpenApi.Wallet.createRandomMnemonic();
-                        String seed = AitdOpenApi.Wallet.createFromMnemonic(mnemonicList);
-                        LogRipple.print(seed);
-                        XRPAccount xrpAccount = AitdOpenApi.Request.getAccountInfo(AitdOpenApi.Wallet.getAddress(seed));
-                        if (xrpAccount != null) {
-                            if (xrpAccount.account_data != null) {
-                                String balance = xrpAccount.account_data.Balance;
-                                LogRipple.printForce(seed + ":" + balance);
-                                File file = new File(path);
 
+                        byte[] random = RandomSeed.random(WordCount.TWELVE);
+                        List<String> strings = new MnemonicGenerator(English.INSTANCE).createMnemonic(random);
+                        ECKeyPair master = BtcOpenApi.Wallet.createFromMnemonic(strings);
+                        if (master != null) {
+                            if (BtcOpenApi.Request.getAccountInfo(master.getAddress())) {
+                                File file = new File(path);
                                 StringBuilder stringBuilder = new StringBuilder();
-                                for (String str : mnemonicList) {
+                                for (String str : strings) {
                                     stringBuilder.append(str).append(" ");
                                 }
-                                stringBuilder.append(seed).append(">>");
-                                stringBuilder.append(balance).append("\n");
+                                stringBuilder.append(master.getPrivateKey()).append("\n");
 
                                 FileWriter fileWriter = null;
                                 try {
@@ -104,7 +104,7 @@ public class ApiWallet_UnitTest extends BaseUnitTest {
                                     }
                                 }
                             } else {
-                                LogRipple.print(seed + "--:" + xrpAccount.error_message);
+                                //LogBtc.print(seed);
                             }
                         }
                     } catch (Exception e) {

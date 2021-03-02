@@ -16,7 +16,7 @@ public abstract class BaseUnitTest {
     //public static String path = "D:/userList.txt";
     //public static String path = "D:/userListEmpty.txt";
 
-    public static String path = "D:/userListTestLog.txt";
+    public static String path = "D:/FindXrp.txt";
     public static String inviteCode = "ED5E8P";//"E0HDYP";
     public static String token = "df57174a8c89471d9819f240ec2c1a07";
 
