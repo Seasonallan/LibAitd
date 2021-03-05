@@ -101,6 +101,20 @@ public class AitdOpenApi {
         }
 
         /**
+         * 通过助记词创建钱包
+         *
+         * @param list
+         * @return
+         */
+        public static Seed createSeedFromMnemonic(List<String> list) {
+            byte[] seed = new SeedCalculator().calculateSeed(list, "");  //助记词生成种子。
+            byte[] seedRes = new byte[16];
+            System.arraycopy(seed, 0, seedRes, 0, 16);
+            Seed seedKey = Seed.fromSeedKey(seedRes);
+            return seedKey;
+        }
+
+        /**
          * 创建随机助记词
          *
          * @return
