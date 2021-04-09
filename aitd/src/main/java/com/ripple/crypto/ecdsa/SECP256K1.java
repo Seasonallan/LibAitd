@@ -35,7 +35,7 @@ public class SECP256K1 {
         return ecParams.getG();
     }
 
-    static byte[] basePointMultipliedBy(BigInteger secret) {
+    public static byte[] basePointMultipliedBy(BigInteger secret) {
         return basePoint().multiply(secret).getEncoded(true);
     }
 

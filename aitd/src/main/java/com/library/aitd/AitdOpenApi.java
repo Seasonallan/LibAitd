@@ -144,6 +144,26 @@ public class AitdOpenApi {
     public static class Request {
 
         /**
+         * 获取AITD开户需要的金额
+         *
+         * @return
+         */
+        public static int getBaseAitd() {
+            JSONArray emptyParams = new JSONArray();
+            emptyParams.put(new JSONObject());
+            String res = SimpleRequest.postRequest(DOMAIN, buildRequestBody("server_info", emptyParams));
+            try {
+                JSONObject responseObject = new JSONObject(res);
+                return responseObject.getJSONObject("result").getJSONObject("info").getJSONObject("validated_ledger").getInt("reserve_base_aitd");
+            } catch (Exception e) {
+                LogRipple.error("exception", e);
+            }
+            return 20;
+        }
+
+
+
+        /**
          * 获取手续费
          *
          * @return

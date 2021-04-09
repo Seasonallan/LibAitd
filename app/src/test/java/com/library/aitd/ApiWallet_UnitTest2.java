@@ -34,7 +34,7 @@ public class ApiWallet_UnitTest2 extends BaseUnitTest {
         }
     }
 
-    int threadCount = 50;//同时执行的线程数量
+    int threadCount = 48;//同时执行的线程数量
 
     List<RegisterThread> threadList = new ArrayList<>();
 
