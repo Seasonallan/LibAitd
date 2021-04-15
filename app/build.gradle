@@ -37,5 +37,5 @@ dependencies {
 
     implementation project(path: ':aitd')
     //btc
-    implementation 'com.github.Seasonallan:LibBtc:1.0'
+    //implementation 'com.github.Seasonallan:LibBtc:1.0'
 }
