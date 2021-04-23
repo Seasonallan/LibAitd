@@ -52,7 +52,8 @@ public class Amount extends Number implements SerializedType, Comparable<com.rip
     // The smallest quantity of an XRP is a drop, 1 millionth of an XRP
     public static final int MAXIMUM_NATIVE_SCALE = 6;
     // Defines bounds for native amounts
-    public static final BigDecimal MAX_NATIVE_VALUE = parseDecimal("100,000,000,000,000,000,000,000");
+    public static final BigDecimal MAX_NATIVE_VALUE = parseDecimal("10,000,000,000,000");
+    //public static final BigDecimal MAX_NATIVE_VALUE = parseDecimal("100,000,000,000,000,000,000,000");
     public static final BigDecimal MIN_NATIVE_VALUE = parseDecimal("0.000,001");
 
     // These are flags used when serializing to binary form
